@@ -18,5 +18,7 @@
     "lib": "@/app/modules/shared/shadcn/lib",
     "hooks": "@/app/modules/shared/shadcn/hooks"
   },
-  "registries": {}
+  "registries": {
+    "@react-bits": "https://reactbits.dev/r/{name}.json"
+  }
 }
