@@ -1,6 +1,7 @@
 'use client';
 import Image from "next/image";
 import LaserFlow from "./modules/shared/shadcn/components/LaserFlow";
+import PageContent from "./modules/home/components/page-content";
 
 export default function Home() {
   return (
@@ -26,7 +27,7 @@ export default function Home() {
             />
           </header>
           <main className="flex-1 p-4 container mx-auto">
-            test
+            <PageContent />
           </main>
           <footer className="bg-background/10 backdrop-blur-xs p-2 text-center">
             <p>&copy; 2025 Sprunk-Baylife. Tous droits réservés.</p>
