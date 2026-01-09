@@ -2,8 +2,10 @@
 import Image from "next/image";
 import LaserFlow from "./modules/shared/shadcn/components/LaserFlow";
 import PageContent from "./modules/home/components/page-content";
+import { LoginButton } from "./modules/home/components/login-button";
 
 export default function Home() {
+
   return (
     <main>
       <div className="relative min-h-screen">
@@ -18,13 +20,16 @@ export default function Home() {
         </div>
         {/* Content Layer */}
         <div className="relative z-10 flex flex-col min-h-screen">
-          <header className="flex bg-background/20 backdrop-blur-xs p-4">
+          <header className="flex justify-between items-center bg-background/20 backdrop-blur-xs p-4">
             <Image
               src="/logos/Sprunk_Fuel_Logo.png"
               alt="logo-sprunk"
               width={150}
               height={150}
             />
+            <div className="flex flex-col items-end gap-2">
+              <LoginButton />
+            </div>
           </header>
           <main className="flex-1 p-4 container mx-auto">
             <PageContent />
