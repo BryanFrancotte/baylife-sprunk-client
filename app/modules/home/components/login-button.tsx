@@ -47,7 +47,7 @@ export function LoginButton() {
   }
 
   return(
-    <Link href={`${process.env.NEXT_PUBLIC_API_URL}/auth/discord`}>
+    <Link href={`/api/auth/discord`}>
       <Button variant="outline">
         <SiDiscord />
         Login
