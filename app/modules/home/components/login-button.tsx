@@ -47,11 +47,11 @@ export function LoginButton() {
   }
 
   return(
-    <Link href={`/api/auth/discord`}>
-      <Button variant="outline">
-        <SiDiscord />
+    <Button asChild variant="outline">
+      <a href="/bff/auth/discord">
+        <SiDiscord className="mr-2" />
         Login
-      </Button>
-    </Link>
+      </a>
+    </Button>
   )
 }
