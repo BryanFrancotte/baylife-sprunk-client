@@ -15,7 +15,7 @@ export function LoginButton() {
   const router = useRouter()
   
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/discord/me`, {
+    fetch("/api/auth/discord/me", {
       credentials: "include"
     })
     .then(res => res.json())
@@ -48,7 +48,7 @@ export function LoginButton() {
 
   return(
     <Button asChild variant="outline">
-      <a href="/bff/auth/discord">
+      <a href="/api/auth/discord">
         <SiDiscord className="mr-2" />
         Login
       </a>
