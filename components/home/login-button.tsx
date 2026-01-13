@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link"
-import { Button } from "../../shared/shadcn/components/ui/button"
 import { SiDiscord } from "@icons-pack/react-simple-icons"
 import { useEffect, useState } from "react"
-import { Spinner } from "../../shared/shadcn/components/ui/spinner"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner";
 import { LayoutDashboard } from "lucide-react";
+import { Button } from "../ui/button";
+import { Spinner } from "../ui/spinner";
 
 export function LoginButton() {
   const [loading, setLoading] = useState(true)

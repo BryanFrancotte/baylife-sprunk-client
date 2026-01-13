@@ -1,10 +1,10 @@
 'use client';
 
 import { motion } from "motion/react";
-import { Card, CardContent, CardHeader, CardTitle } from "../../shared/shadcn/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "../../shared/shadcn/components/ui/button";
+import { Button } from "../ui/button";
 import { CalendarDays, TicketsPlane } from "lucide-react";
 
 export default function PageContent() {

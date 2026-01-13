@@ -1,8 +1,8 @@
 'use client';
 import Image from "next/image";
-import LaserFlow from "./modules/shared/shadcn/components/LaserFlow";
-import PageContent from "./modules/home/components/page-content";
-import { LoginButton } from "./modules/home/components/login-button";
+import PageContent from "../components/home/page-content";
+import { LoginButton } from "../components/home/login-button";
+import LaserFlow from "@/components/home/LaserFlow";
 
 export default function Home() {
 

@@ -1,5 +1,6 @@
 "use client";
 
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { 
   ColumnDef,
   flexRender,
@@ -7,14 +8,7 @@ import {
   useReactTable
 } from "@tanstack/react-table";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "@/app/modules/shared/shadcn/components/ui/table";
+
 
 
 interface DataTableProps<TData, TValue> {
@@ -53,6 +47,10 @@ export function DataTable<TData, TValue>({
           ))}
         </TableHeader>
         <TableBody>
+          {/* New row appears at the top when adding */}
+          {}
+
+          {/* Existing rows */}
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
