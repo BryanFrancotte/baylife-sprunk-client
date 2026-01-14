@@ -120,7 +120,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/@me`, {
+        const response = await fetch(`api/user/@me`, {
           credentials: "include"
         });
         
