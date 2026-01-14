@@ -103,7 +103,7 @@ export function DispenserRow({
       const zodErrors: Record<string, string> = {};
       result.error.issues.forEach((err) => {
         const path = err.path.join(".");
-        console.log(path + ": " + err.message)
+        console.log("validation output: " + err.input + "|" + err.code + "|" + err.message)
         zodErrors[path] = err.message;
       });
       setErrors(zodErrors);
@@ -115,7 +115,7 @@ export function DispenserRow({
 
   const handleSave = async () => {
     const validateData = validateForm();
-    console.log("test validation" + validateData)
+    console.log("test validation: " + validateData)
     if (!validateData) return;
 
     setIsSaving(true);
