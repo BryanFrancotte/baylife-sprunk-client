@@ -38,7 +38,7 @@ export function LoginButton() {
 
   if(authenticated) {
     return (
-      <Button variant="outline" onClick={() => router.push("/dispenser")}>
+      <Button variant="outline" onClick={() => router.push("/dispensers")}>
         <LayoutDashboard />
         Dashboard
       </Button>
