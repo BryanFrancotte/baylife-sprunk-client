@@ -54,7 +54,7 @@ export const columns: ColumnDef<Dispenser>[] = [
     accessorKey: "sharePercentage",
     header: "Pourcentage client",
     cell: ({ row }) => {
-      const percentage = row.original.sharePercentage;
+      const percentage = row.original.sharePercentage/100;
       const formatted = new Intl.NumberFormat("fr-FR", {
         style: "percent"
       }).format(percentage)
