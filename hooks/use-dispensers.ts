@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ApiError,
   createDispenser,
   deleteDispenser,
   fetchDispensers,
@@ -12,6 +13,7 @@ import {
   Owner,
 } from "@/lib/types/dispensers";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 // Hook return type
 interface UseDispensersReturn {
@@ -60,9 +62,21 @@ export function useDispensers(): UseDispensersReturn {
       try {
         const newDispenser = await createDispenser(data);
         setDispensers((prev) => [...prev, newDispenser]);
+        if (data.ownerId === "") {
+          const newOwner = newDispenser.owner;
+          setOwners((prev) => [...prev, newOwner]);
+        }
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Failed to create dispenser!";
+
+        if (err instanceof ApiError) {
+          toast.error(`${err.name}: (${err.type}) ${errorMessage}`, {
+            description: `${err.summary}`
+          })
+        } else {
+          toast.error(errorMessage)
+        }
         throw new Error(errorMessage);
       }
     },

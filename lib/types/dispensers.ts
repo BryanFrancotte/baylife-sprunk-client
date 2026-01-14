@@ -74,39 +74,37 @@ const createDispenserWithExistingOwnerSchema = z.object({
   ownerPhoneNumber: z.literal(""),
   location: z.string().min(1, "Location is required"),
   locationImgUrl: z.string().url("Must be a valid URL").or(z.literal("")),
-  sharePercentage: z.string()
+  sharePercentage: z.number()
     .min(1, "Share percentage is required")
     .refine(
       (val) => {
-        const num = parseFloat(val);
-        return !isNaN(num) && num >= 0 && num <= 100;
+        return !isNaN(val) && val >= 0 && val <= 100;
       },
       { message: "Must be a number between 0 and 100" }
     ),
 });
 
 const createDispenserWithNewOwnerSchema = z.object({
-  ownerId: z.null(),
+  ownerId: z.literal("", "owner id must be empty for new owner"),
   ownerName: z.string().min(1, "Owner name is required for new owner"),
   ownerPhoneNumber: z.string().min(1, "Phone number is required for new owner"),
   location: z.string().min(1, "Location is required"),
   locationImgUrl: z.string().url("Must be a valid URL").or(z.literal("")),
-  sharePercentage: z.string()
+  sharePercentage: z.number()
     .min(1, "Share percentage is required")
     .refine(
       (val) => {
-        const num = parseFloat(val);
-        return !isNaN(num) && num >= 0 && num <= 100;
+        return !isNaN(val) && val >= 0 && val <= 100;
       },
       { message: "Must be a number between 0 and 100" }
     ),
 });
 
 /**
- * Discriminated union for client-side validation
- * Enforces the business logic at the form level
+ * Union for client-side validation.
+ * We cannot use a discriminated union here because ownerId is not a literal.
  */
-export const createDispenserPayloadSchema = z.discriminatedUnion("ownerId", [
+export const createDispenserPayloadSchema = z.union([
   createDispenserWithExistingOwnerSchema,
   createDispenserWithNewOwnerSchema,
 ]);
@@ -122,7 +120,7 @@ export interface DispenserFormData {
   ownerPhoneNumber: string;
   location: string;
   locationImgUrl: string;
-  sharePercentage: string;
+  sharePercentage: number;
 }
 
 /**

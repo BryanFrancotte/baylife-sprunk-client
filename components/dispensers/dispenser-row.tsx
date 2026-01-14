@@ -36,7 +36,7 @@ export function DispenserRow({
     ownerPhoneNumber: "",
     location: "",
     locationImgUrl: "",
-    sharePercentage: "",
+    sharePercentage: 40,
   });
 
   const [isSaving, setIsSaving] = useState(false);
@@ -75,21 +75,27 @@ export function DispenserRow({
   };
 
   const validateForm = (): CreateDispenserPayload | null => {
-    const payload = isCreatingNewOwner ? {
-      ownerId: null as null,
-      ownerName : formData.ownerName,
-      ownerPhoneNumber: formData.ownerPhoneNumber,
-      location: formData.location,
-      locationImgUrl: formData.locationImgUrl,
-      sharedPercentage: formData.sharePercentage
-    } : {
-      ownerId: formData.ownerId,
-      ownerName : "" as const,
-      ownerPhoneNumber: "" as const,
-      location: formData.location,
-      locationImgUrl: formData.locationImgUrl,
-      sharedPercentage: formData.sharePercentage
-    };
+    let payload: unknown;
+
+    if(isCreatingNewOwner) {
+      payload = {
+        ownerId: "",
+        ownerName: formData.ownerName,
+        ownerPhoneNumber: formData.ownerPhoneNumber,
+        location: formData.location,
+        locationImgUrl: formData.locationImgUrl,
+        sharePercentage: formData.sharePercentage,
+      };
+    } else {
+      payload = {
+        ownerId: formData.ownerId,
+        ownerName: "",
+        ownerPhoneNumber: "",
+        location: formData.location,
+        locationImgUrl: formData.locationImgUrl,
+        sharePercentage: formData.sharePercentage,
+      };
+    }
 
     const result = createDispenserPayloadSchema.safeParse(payload);
 
@@ -97,6 +103,7 @@ export function DispenserRow({
       const zodErrors: Record<string, string> = {};
       result.error.issues.forEach((err) => {
         const path = err.path.join(".");
+        console.log(path + ": " + err.message)
         zodErrors[path] = err.message;
       });
       setErrors(zodErrors);
@@ -108,6 +115,7 @@ export function DispenserRow({
 
   const handleSave = async () => {
     const validateData = validateForm();
+    console.log("test validation" + validateData)
     if (!validateData) return;
 
     setIsSaving(true);
@@ -285,9 +293,6 @@ export function DispenserRow({
               <X className="h-4 w-4" />
             </Button>
           </div>
-          {errors._form && (
-            <p className="text-xs text-destructive">{errors._form}</p>
-          )}
         </div>
       </TableCell>
     </TableRow>

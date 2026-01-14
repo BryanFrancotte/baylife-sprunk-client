@@ -6,11 +6,15 @@ import {
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_FRONT_API_URL;
 
-class ApiError extends Error {
-  constructor(public status: number, message: string) {
+export class ApiError extends Error {
+  constructor(public status: number, message: string, type: string, summary: string) {
     super(message);
     this.name = "ApiError";
+    this.summary = summary;
+    this.type = type;
   }
+  public type: string;
+  public summary: string; 
 }
 
 async function apiFetch<T>(
@@ -30,7 +34,9 @@ async function apiFetch<T>(
       const errorData = await response.json().catch(() => ({}));
       throw new ApiError(
         response.status,
-        errorData.message || `HTTP ${response.status}: ${response.statusText}`
+        errorData.message || `HTTP ${response.status}: ${response.statusText}`,
+        errorData.type,
+        errorData.summary
       );
     }
 
@@ -53,6 +59,8 @@ export async function fetchDispensers(): Promise<Dispenser[]> {
 export async function createDispenser(
   data: CreateDispenserPayload
 ): Promise<Dispenser> {
+
+  console.log("api data: " + JSON.stringify(data))
   return apiFetch<Dispenser>("/dispenser", {
     method: "POST",
     body: JSON.stringify(data),
