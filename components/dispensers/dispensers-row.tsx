@@ -43,7 +43,7 @@ export function DispenserRow({
 
   const isCreatingNewOwner = formData.ownerId === "new";
 
-  const handleChange = (field: keyof DispenserFormData, value: string) => {
+  const handleChange = (field: keyof DispenserFormData, value: string | number) => {
     setFormData((prev) => ({...prev, [field]: value}));
     if (errors[field]) {
       setErrors((prev) => {
@@ -228,7 +228,7 @@ export function DispenserRow({
           <Input
             type="number"
             value={formData.sharePercentage}
-            onChange={(e) => handleChange("sharePercentage", e.target.value)}
+            onChange={(e) => handleChange("sharePercentage", Number.parseInt(e.target.value))}
             placeholder="0-100 *"
             min="0"
             max="100"
