@@ -82,6 +82,10 @@ const navigation = {
         {
           title: "Gestion",
           url: "/dispenser"
+        },
+        {
+          title: "Clients",
+          url: "#"
         }
       ]
     },
@@ -95,7 +99,7 @@ const navigation = {
           url: "#",
         },
         {
-          title: "Suivit",
+          title: "Suivi",
           url: "#",
         }
       ],

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Check, Loader2, X } from "lucide-react";
+import { Check, ImageUp, Loader2, X } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 interface DispenserRowProps {
@@ -38,7 +38,6 @@ export function DispenserRow({
     locationImgUrl: "",
     sharePercentage: 40,
   });
-
   const [isSaving, setIsSaving] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({})
 
@@ -101,10 +100,10 @@ export function DispenserRow({
 
     if (!result.success) {
       const zodErrors: Record<string, string> = {};
-      result.error.issues.forEach((err) => {
-        const path = err.path.join(".");
-        console.log("validation output: " + err.input + "|" + err.code + "|" + err.message)
-        zodErrors[path] = err.message;
+      result.error.issues.forEach((issue) => {
+        const path = issue.path.join(".");
+        console.log("validation output: " + issue.input + "|" + issue.code + "|" + issue.message)
+        zodErrors[path] = issue.message;
       });
       setErrors(zodErrors);
       return null;
@@ -248,19 +247,13 @@ export function DispenserRow({
         <span className="text-sm text-muted-foreground">0 €</span>
       </TableCell>
 
-      {/* Location Image URL */}
+      {/* Upload Location Image: Should open a modal for upload */}
       <TableCell>
         <div className="space-y-1">
-          <Input
-            value={formData.locationImgUrl}
-            onChange={(e) => handleChange("locationImgUrl", e.target.value)}
-            placeholder="URL d'image (optionnel)"
-            disabled={isSaving}
-            className={errors.locationImgUrl ? "border-destructive" : ""}
-          />
-          {errors.locationImgUrl && (
-            <p className="text-xs text-destructive">{errors.locationImgUrl}</p>
-          )}
+          <Button variant="outline" size="sm">
+            <ImageUp />
+            Upload Location
+          </Button>
         </div>
       </TableCell>
 

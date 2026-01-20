@@ -3,41 +3,50 @@
 import { CreateDispenserPayload, Dispenser, Owner } from "@/lib/types/dispensers";
 import { ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
-import { columns } from "./columns";
+import { getDispensersColumns } from "./dispensers-columns";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
-import { DispenserRow } from "./dispenser-row";
+import { DispenserRow } from "./dispensers-row";
+import { DispenserEditRow } from "./dispensers-edit-row";
 
 interface DispenserTableProps {
   dispensers: Dispenser[];
   owners: Owner[];
   onCreateDispenser: (data: CreateDispenserPayload) => Promise<void>;
+  onUpdateDispenser: (id: string, data: Partial<CreateDispenserPayload>) => Promise<void>
 }
 
 export function DispensersTable({
   dispensers,
   owners,
   onCreateDispenser,
+  onUpdateDispenser
 }: DispenserTableProps) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingId, setEditingId] = useState("");
   const [isCreating, setIsCreating] = useState(false);
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const table = useReactTable({
-    data: dispensers,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    state: {
-      sorting,
-      columnFilters,
+  const handleStartEdit = (id: string) => {
+    setEditingId(id);
+    setIsEditing(true);
+  }
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+  }
+
+  const handleUpdateDispenser = async(id: string, data: Partial<CreateDispenserPayload>) => {
+    try {
+      await onUpdateDispenser(id, data);
+      setIsEditing(false);
+    } catch (error) {
+      throw error;
     }
-  });
+  }
 
   const handleStartCreate = () => {
     setIsCreating(true);
@@ -55,6 +64,20 @@ export function DispensersTable({
       throw error;
     }
   };
+
+  const table = useReactTable({
+    data: dispensers,
+    columns: getDispensersColumns(handleStartEdit),
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onSortingChange: setSorting,
+    onColumnFiltersChange: setColumnFilters,
+    state: {
+      sorting,
+      columnFilters,
+    }
+  });
 
   return (
     <div className="space-y-4">
@@ -112,26 +135,40 @@ export function DispensersTable({
 
             {/* Existing Dispensers */}
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                if (isEditing && row.original.id === editingId) {
+                  return (
+                    <DispenserEditRow
+                      key={row.id}
+                      dispenser={row.original}
+                      isUpdating={true}
+                      onUpdate={handleUpdateDispenser}
+                      onCancel={handleCancelEdit} 
+                    />
+                  );
+                }
+
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                )
+              })
             ) : (
               !isCreating && (
                 <TableRow>
                   <TableCell
-                    colSpan={columns.length}
+                    colSpan={getDispensersColumns.length}
                     className="h-24 text-center"
                   >
                     Aucun distributeur trouvé.

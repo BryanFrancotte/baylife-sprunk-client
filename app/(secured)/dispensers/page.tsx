@@ -12,6 +12,7 @@ export default function DispenserPage() {
     isLoading,
     error,
     createNewDispenser,
+    updateEditedDispenser,
     refreshData
   } = useDispensers()
 
@@ -57,6 +58,7 @@ export default function DispenserPage() {
         dispensers={dispensers}
         owners={owners}
         onCreateDispenser={createNewDispenser}
+        onUpdateDispenser={updateEditedDispenser}
       />
     </div>
   );

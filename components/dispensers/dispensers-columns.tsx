@@ -16,10 +16,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { BadgeDollarSign, ImageUp, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { toast } from "sonner";
 
-export const columns: ColumnDef<Dispenser>[] = [
+export const getDispensersColumns = (handleStartEdit: (id: string)=> void): ColumnDef<Dispenser>[] => [
   {
     accessorKey: "location",
     header: "Localisation",
@@ -74,6 +75,18 @@ export const columns: ColumnDef<Dispenser>[] = [
     },
   },
   {
+    accessorKey: "lastPeriondCollectedAmount",
+    header: "Dernier dépôt",
+    cell: ({row}) => {
+      const amount = row.original.lastPeriondCollectedAmount
+      const formatted = new Intl.NumberFormat("fr-FR", {
+        style: "currency",
+        currency: "USD"
+      }).format(amount);
+      return <div>{formatted}</div>
+    }
+  },
+  {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
@@ -92,10 +105,19 @@ export const columns: ColumnDef<Dispenser>[] = [
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(dispenser.id)}
             >
-              Copier l&apos;ID
+              <ImageUp />
+              Upload Location Image
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => toast.info("Collecting Money")}
+            >
+              <BadgeDollarSign />
+              Relevé
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => handleStartEdit(dispenser.id)}
+            >
               <Pencil className="mr-2 h-4 w-4" />
               Modifier
             </DropdownMenuItem>

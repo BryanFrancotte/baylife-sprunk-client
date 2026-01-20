@@ -38,7 +38,7 @@ export default function PageContent() {
         {/* 2 Card layout */}
         <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Card - Left */}
-          <Card className="border-0 shadow-lg bg-gradian-to-br from-background backdrop-blur-xs to-muted/20 h-full flex flex-col">
+          <Card className="border-0 bg-gradian-to-br from-background backdrop-blur-xs to-muted/20 h-full flex flex-col">
             <CardHeader>
               <CardTitle className="text-center">Planning &Eacute;vènements et Activtés</CardTitle>
             </CardHeader>
@@ -67,14 +67,14 @@ export default function PageContent() {
           </Card>
 
           {/* Card - Right */}
-          <Card className="border-0 shadow-lg bg-gradian-to-br from-background backdrop-blur-s to-muted/20 h-full flex flex-col">
+          <Card className="border-0 bg-gradian-to-br from-background backdrop-blur-s to-muted/20 h-full flex flex-col">
             <CardHeader>
               <CardTitle className="text-center">&Eacute;vènements / Activités sur demande</CardTitle>
             </CardHeader>
             <CardContent className="flex-1 flex flex-col space-y-4">
               <p className="text-sm text-muted-foreground text-center flex-1">
                 Réservez vos activités sportives et événements extrêmes sur mesure. Personnalisez votre expérience selon vos préférences et créez des moments inoubliables adaptés à vos besoins.
-              </p>
+              </p> 
               <div className="flex justify-center">
                 <Image
                   className="rounded-lg shadow-md hover:shadow-lg transition-shadow"

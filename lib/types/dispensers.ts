@@ -75,7 +75,7 @@ const createDispenserWithExistingOwnerSchema = z.object({
   location: z.string().min(1, "Location is required"),
   locationImgUrl: z.string().url("Must be a valid URL").or(z.literal("")),
   sharePercentage: z.number()
-    .min(1, "Share percentage is required")
+    .min(1, "Share percentage is required") // todo: this is creating issue 
     .refine(
       (val) => {
         return !isNaN(val) && val >= 0 && val <= 100;
@@ -91,7 +91,7 @@ const createDispenserWithNewOwnerSchema = z.object({
   location: z.string().min(1, "Location is required"),
   locationImgUrl: z.string().url("Must be a valid URL").or(z.literal("")),
   sharePercentage: z.number()
-    .min(1, "Share percentage is required")
+    .min(1, "Share percentage is required") // todo: this is creating issue 
     .refine(
       (val) => {
         return !isNaN(val) && val >= 0 && val <= 100;
@@ -130,3 +130,13 @@ export interface CreateOwnerPayload {
   name: string;
   phoneNumber: string;
 }
+
+export interface UpdateDispenserFormData {
+  location: string;
+  sharePercentage: number;
+}
+
+export const updateDispenserSchema = z.object({
+  location: z.string().min(1, "Location is required"),
+  sharePercentage: z.number()
+});

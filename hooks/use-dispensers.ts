@@ -6,6 +6,7 @@ import {
   deleteDispenser,
   fetchDispensers,
   fetchOwners,
+  updateDispenser,
 } from "@/lib/api/dispensers";
 import {
   CreateDispenserPayload,
@@ -22,6 +23,7 @@ interface UseDispensersReturn {
   isLoading: boolean;
   error: string | null;
   createNewDispenser: (data: CreateDispenserPayload) => Promise<void>;
+  updateEditedDispenser: (id: string, data: Partial<CreateDispenserPayload>) => Promise<void>;
   removeDispenser: (id: string) => Promise<void>;
   refreshData: () => Promise<void>;
 }
@@ -83,6 +85,29 @@ export function useDispensers(): UseDispensersReturn {
     []
   );
 
+  const updateEditedDispenser = useCallback(async (id: string, data: Partial<CreateDispenserPayload>) => {
+      try {
+        const updatedDispenser = await updateDispenser(id, data);
+        setDispensers((prev) => 
+          prev.map(d => d.id === updatedDispenser.id ? updatedDispenser : d)
+        );
+      }  catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to create dispenser!";
+
+        if (err instanceof ApiError) {
+          toast.error(`${err.name}: (${err.type}) ${errorMessage}`, {
+            description: `${err.summary}`
+          })
+        } else {
+          toast.error(errorMessage)
+        }
+        throw new Error(errorMessage);
+      }
+    },
+    []
+  );
+
   // Delete a dispenser
   const removeDispenser = useCallback(async (id: string) => {
     try {
@@ -110,6 +135,7 @@ export function useDispensers(): UseDispensersReturn {
     isLoading,
     error,
     createNewDispenser,
+    updateEditedDispenser,
     removeDispenser,
     refreshData,
   };
