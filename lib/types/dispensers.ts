@@ -140,3 +140,13 @@ export const updateDispenserSchema = z.object({
   location: z.string().min(1, "Location is required"),
   sharePercentage: z.number()
 });
+
+export interface CollectDispenserFormData {
+  collectedAmount: number;
+}
+
+export const collectDispenserSchema = z.object({
+  collectedAmount: z.number().gt(0)
+})
+
+export type CollectDispenserPayload = z.infer<typeof collectDispenserSchema>;

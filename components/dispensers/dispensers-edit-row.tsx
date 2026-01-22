@@ -1,3 +1,5 @@
+"use client"
+
 import { CreateDispenserPayload, Dispenser, UpdateDispenserFormData, updateDispenserSchema } from "@/lib/types/dispensers";
 import { useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
@@ -26,7 +28,6 @@ export function DispenserEditRow({
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSaveChanges = (field: keyof UpdateDispenserFormData, value: string | number) => {
-    console.log(typeof(value)) 
     setFormData((prev) => ({...prev, [field]: value}));
     if(errors[field]) {
       setErrors((prev) => {
@@ -49,7 +50,6 @@ export function DispenserEditRow({
       const zodErrors: Record<string, string> = {};
       result.error.issues.forEach((issue) => {
         const path = issue.path.join(".");
-        console.log("validation output: " + issue.input + "|" + issue.code + "|" + issue.message);
         zodErrors[path] = issue.message;
       });
       setErrors(zodErrors);

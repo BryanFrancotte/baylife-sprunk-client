@@ -2,6 +2,7 @@
 
 import {
   ApiError,
+  collectDispenser,
   createDispenser,
   deleteDispenser,
   fetchDispensers,
@@ -9,6 +10,7 @@ import {
   updateDispenser,
 } from "@/lib/api/dispensers";
 import {
+  CollectDispenserPayload,
   CreateDispenserPayload,
   Dispenser,
   Owner,
@@ -24,6 +26,7 @@ interface UseDispensersReturn {
   error: string | null;
   createNewDispenser: (data: CreateDispenserPayload) => Promise<void>;
   updateEditedDispenser: (id: string, data: Partial<CreateDispenserPayload>) => Promise<void>;
+  collectMoneyFromDispenser: (id: string, data: CollectDispenserPayload) => Promise<void>,
   removeDispenser: (id: string) => Promise<void>;
   refreshData: () => Promise<void>;
 }
@@ -93,7 +96,7 @@ export function useDispensers(): UseDispensersReturn {
         );
       }  catch (err) {
         const errorMessage =
-          err instanceof Error ? err.message : "Failed to create dispenser!";
+          err instanceof Error ? err.message : "Failed to update dispenser!";
 
         if (err instanceof ApiError) {
           toast.error(`${err.name}: (${err.type}) ${errorMessage}`, {
@@ -107,6 +110,27 @@ export function useDispensers(): UseDispensersReturn {
     },
     []
   );
+
+  // Collect the money made by the dispenser
+  const collectMoneyFromDispenser = useCallback(async (id: string, data: CollectDispenserPayload) => {
+    try {
+      const updatedDispenser = await collectDispenser(id, data);
+      setDispensers((prev) => 
+        prev.map(d => d.id === updatedDispenser.id ? updatedDispenser : d)
+      );
+    } catch (err) {
+      const errorMessage = 
+        err instanceof Error ? err.message : "Failed to collect money from the dispenser";
+
+        if(err instanceof ApiError) {
+          toast.error(`${err.name}: (${err.type}) ${err.message}`, {
+            description: `${err.summary}`,
+          });
+        } else {
+          toast.error(errorMessage);
+        }
+    }
+  },[])
 
   // Delete a dispenser
   const removeDispenser = useCallback(async (id: string) => {
@@ -136,6 +160,7 @@ export function useDispensers(): UseDispensersReturn {
     error,
     createNewDispenser,
     updateEditedDispenser,
+    collectMoneyFromDispenser,
     removeDispenser,
     refreshData,
   };

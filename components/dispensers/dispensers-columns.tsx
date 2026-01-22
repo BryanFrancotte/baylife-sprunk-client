@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Dispenser } from "@/lib/types/dispensers";
+import { CollectDispenserPayload, Dispenser } from "@/lib/types/dispensers";
 import { ColumnDef } from "@tanstack/react-table";
 import {
   HoverCard,
@@ -18,9 +18,12 @@ import {
 } from "../ui/dropdown-menu";
 import { BadgeDollarSign, ImageUp, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 import { Button } from "../ui/button";
-import { toast } from "sonner";
+import { DispenserCollectDialog } from "./dispenser-collect-dialog";
 
-export const getDispensersColumns = (handleStartEdit: (id: string)=> void): ColumnDef<Dispenser>[] => [
+export const getDispensersColumns = (
+  handleStartUpdate: (id: string)=> void,
+  handleCollectMoneyDispenser: (id: string, data: CollectDispenserPayload) => Promise<void>  
+): ColumnDef<Dispenser>[] => [
   {
     accessorKey: "location",
     header: "Localisation",
@@ -64,7 +67,7 @@ export const getDispensersColumns = (handleStartEdit: (id: string)=> void): Colu
   },
   {
     accessorKey: "collectedAmount",
-    header: "Argent récupérer",
+    header: "Argent récupéré",
     cell: ({ row }) => {
       const amount = row.original.collectedAmount;
       const formatted = new Intl.NumberFormat("fr-FR", {
@@ -76,9 +79,9 @@ export const getDispensersColumns = (handleStartEdit: (id: string)=> void): Colu
   },
   {
     accessorKey: "lastPeriondCollectedAmount",
-    header: "Dernier dépôt",
+    header: "Total généré",
     cell: ({row}) => {
-      const amount = row.original.lastPeriondCollectedAmount
+      const amount = row.original.totalMoneyGenerated
       const formatted = new Intl.NumberFormat("fr-FR", {
         style: "currency",
         currency: "USD"
@@ -108,15 +111,18 @@ export const getDispensersColumns = (handleStartEdit: (id: string)=> void): Colu
               <ImageUp />
               Upload Location Image
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => toast.info("Collecting Money")}
-            >
-              <BadgeDollarSign />
-              Relevé
+            <DropdownMenuItem asChild>
+              <DispenserCollectDialog
+                dispenser={row.original}
+                onSaveCollected={handleCollectMoneyDispenser}
+              >
+                <BadgeDollarSign className="mr-2 h-4 w-4"/>
+                Relevé
+              </DispenserCollectDialog>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => handleStartEdit(dispenser.id)}
+              onClick={() => handleStartUpdate(dispenser.id)}
             >
               <Pencil className="mr-2 h-4 w-4" />
               Modifier

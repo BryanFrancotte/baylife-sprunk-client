@@ -1,6 +1,6 @@
 "use client"
 
-import { CreateDispenserPayload, Dispenser, Owner } from "@/lib/types/dispensers";
+import { CollectDispenserPayload, CreateDispenserPayload, Dispenser, Owner } from "@/lib/types/dispensers";
 import { ColumnFiltersState, flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
 import { getDispensersColumns } from "./dispensers-columns";
@@ -16,13 +16,15 @@ interface DispenserTableProps {
   owners: Owner[];
   onCreateDispenser: (data: CreateDispenserPayload) => Promise<void>;
   onUpdateDispenser: (id: string, data: Partial<CreateDispenserPayload>) => Promise<void>
+  onCollectDispenser: (id: string, data: CollectDispenserPayload) => Promise<void>
 }
 
 export function DispensersTable({
   dispensers,
   owners,
   onCreateDispenser,
-  onUpdateDispenser
+  onUpdateDispenser,
+  onCollectDispenser,
 }: DispenserTableProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState("");
@@ -30,12 +32,12 @@ export function DispensersTable({
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-  const handleStartEdit = (id: string) => {
+  const handleStartUpdate = (id: string) => {
     setEditingId(id);
     setIsEditing(true);
   }
 
-  const handleCancelEdit = () => {
+  const handleCancelUpdate = () => {
     setIsEditing(false);
   }
 
@@ -67,7 +69,7 @@ export function DispensersTable({
 
   const table = useReactTable({
     data: dispensers,
-    columns: getDispensersColumns(handleStartEdit),
+    columns: getDispensersColumns(handleStartUpdate, onCollectDispenser),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -143,7 +145,7 @@ export function DispensersTable({
                       dispenser={row.original}
                       isUpdating={true}
                       onUpdate={handleUpdateDispenser}
-                      onCancel={handleCancelEdit} 
+                      onCancel={handleCancelUpdate} 
                     />
                   );
                 }

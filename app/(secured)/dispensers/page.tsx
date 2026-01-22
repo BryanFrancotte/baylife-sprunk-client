@@ -13,6 +13,7 @@ export default function DispenserPage() {
     error,
     createNewDispenser,
     updateEditedDispenser,
+    collectMoneyFromDispenser,
     refreshData
   } = useDispensers()
 
@@ -59,6 +60,7 @@ export default function DispenserPage() {
         owners={owners}
         onCreateDispenser={createNewDispenser}
         onUpdateDispenser={updateEditedDispenser}
+        onCollectDispenser={collectMoneyFromDispenser}
       />
     </div>
   );

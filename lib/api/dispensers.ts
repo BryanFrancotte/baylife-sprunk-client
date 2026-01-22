@@ -1,4 +1,5 @@
 import {
+  CollectDispenserPayload,
   CreateDispenserPayload,
   Dispenser,
   Owner,
@@ -76,6 +77,16 @@ export async function updateDispenser(
     body: JSON.stringify(data),
   });
 }
+
+export async function collectDispenser(
+  id: string, 
+  data: CollectDispenserPayload
+): Promise<Dispenser> {
+  return apiFetch<Dispenser>(`/dispenser/collect/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data)
+  });
+} 
 
 export async function deleteDispenser(id: string): Promise<void> {
   return apiFetch<void>(`/dispenser/${id}`, {
