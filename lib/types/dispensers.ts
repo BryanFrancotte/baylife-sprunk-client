@@ -131,6 +131,16 @@ export interface CreateOwnerPayload {
   phoneNumber: string;
 }
 
+export interface OwnerUpdateFormData {
+  name: string;
+  phoneNumber: string;
+}
+
+export const ownerUpdateSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  phoneNumber: z.string().min(1, "Phone number is required")
+})
+
 export interface UpdateDispenserFormData {
   location: string;
   sharePercentage: number;

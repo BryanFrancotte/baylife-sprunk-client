@@ -1,7 +1,7 @@
 "use client";
 
+import { ApiError } from "@/lib/api/baseApi";
 import {
-  ApiError,
   collectDispenser,
   createDispenser,
   deleteDispenser,
