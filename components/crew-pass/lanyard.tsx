@@ -17,7 +17,7 @@ import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
 
 
-extend({ MeshLineGeometry, MeshLineMaterial });
+extend({MeshLineGeometry, MeshLineMaterial});
 
 interface LanyardProps {
   position?: [number, number, number];
@@ -107,7 +107,7 @@ function Band({ maxSpeed = 50, minSpeed = 0, isMobile = false }: BandProps) {
   const rot = new THREE.Vector3();
   const dir = new THREE.Vector3();
 
-  const segmentProps: unknown = {
+  const segmentProps: any = {
     type: 'dynamic' as RigidBodyProps['type'],
     canSleep: true,
     colliders: false,

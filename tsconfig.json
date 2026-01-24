@@ -30,7 +30,6 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "**/*.d.ts",
-    "lib/types/global.d.ts"
   ],
   "exclude": ["node_modules"]
 }
