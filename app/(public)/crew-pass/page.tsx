@@ -16,9 +16,11 @@ export default function CrewPassPage() {
           bloomIntensity={0.6}
           chromaticAberration={0.002}
           noiseIntensity={0.01}
+          scanSoftness={2.5}
+          scanDuration={4}
         />
       </div>
-      <div>
+      <div className="fixed">
         <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
       </div>
     </div>
