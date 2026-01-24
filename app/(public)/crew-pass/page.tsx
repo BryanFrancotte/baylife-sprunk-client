@@ -20,7 +20,7 @@ export default function CrewPassPage() {
           scanDuration={4}
         />
       </div>
-      <div className="fixed">
+      <div className="fixed inset-0">
         <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
       </div>
     </div>
