@@ -1,7 +1,4 @@
-"use client";
-
 import * as React from "react";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
 import {
@@ -21,11 +18,10 @@ import {
   SidebarRail 
 } from "../ui/sidebar";
 
-import { toast } from "sonner";
-
 import NavMain from "./nav-main";
 import NavTools from "./nav-tools";
 import NavUser from "./nav-user";
+import { useAppSidebar } from "@/hooks/use-app-sidebar";
 
 const navigation = {
   main: [
@@ -45,17 +41,6 @@ const navigation = {
         {
           title: "Events",
           url: "#"
-        }
-      ],
-    },
-    {
-      title: "Employees",
-      url: "#",
-      icon: Users,
-      items: [
-        {
-          title: "Liste",
-          url: "#",
         }
       ],
     },
@@ -81,11 +66,11 @@ const navigation = {
       items: [
         {
           title: "Gestion",
-          url: "/dispenser"
+          url: "/dispensers"
         },
         {
-          title: "Clients",
-          url: "#"
+          title: "Propriétaires",
+          url: "/dispensers/owners"
         }
       ]
     },
@@ -94,10 +79,6 @@ const navigation = {
       url: "#",
       icon: Car,
       items: [
-        {
-          title: "Liste",
-          url: "#",
-        },
         {
           title: "Suivi",
           url: "#",
@@ -115,33 +96,8 @@ const navigation = {
 };
 
 const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
-  const [user, setUser] = useState<{
-    name: string;
-    avatar: string;
-    discordId: string;
-  } | null>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(`api/user/@me`, {
-          credentials: "include"
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const userData = await response.json();
-        setUser(userData);
-      } catch (error) {
-        console.error("Failed to fetch user:", error);
-        toast.error("Erreur lors de la récuperation utilisateur")
-      }
-    };
-
-    fetchUser();
-  }, []);
+  const user = useAppSidebar()
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -158,7 +114,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         <NavTools toolsItems={navigation.tools} />
       </SidebarContent>
       <SidebarFooter>
-        {user && <NavUser user={user} />}
+        {user.user && <NavUser user={user.user} />}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
