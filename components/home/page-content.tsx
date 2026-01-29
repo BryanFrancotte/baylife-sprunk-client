@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { CalendarDays, TicketsPlane } from "lucide-react";
+import { CalendarDays, Fuel, IdCardLanyard, TicketsPlane } from "lucide-react";
 
 export default function PageContent() {
   const containerVariants ={
@@ -14,7 +14,7 @@ export default function PageContent() {
       opacity: 1,
       transition: {
         duration: 0.6,
-        staggerChildren: 0.1,
+        staggerChildren: 0.3,
       },
     },
   }
@@ -23,7 +23,7 @@ export default function PageContent() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.7 },
     },
   }
 
@@ -36,7 +36,7 @@ export default function PageContent() {
         className="container mx-auto px-4 py-6 max-w-7xl h-full"
       >
         {/* 2 Card layout */}
-        <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Card - Left */}
           <Card className="border-0 bg-gradian-to-br from-background backdrop-blur-xs to-muted/20 h-full flex flex-col">
             <CardHeader>
@@ -78,7 +78,7 @@ export default function PageContent() {
               <div className="flex justify-center">
                 <Image
                   className="rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                  src="/placeholder.svg"
+                  src="/home-page/sprunk-karting.png"
                   alt="Book Activity"
                   width={500}
                   height={375}
@@ -94,14 +94,49 @@ export default function PageContent() {
               </div>
             </CardContent>
           </Card>
-
         </motion.div>
 
         {/* Footer */}
         <motion.div
           variants={itemVariants}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         >
-
+          <Card className="border-0 mt-4 bg-gradian-to-br from-background backdrop-blur-s to-muted/50 h-full">
+            <CardContent className="justify-items-center">
+              <div className="content-center">
+                <CardTitle>Partagez l&apos;essence de la vie avec les distributeurs Sprunk Fuel</CardTitle>
+              </div>
+              <div className="py-4">
+                <Link href="dispensers-report">
+                  <Button>
+                    <Fuel />
+                    Consultez vos distributeurs
+                  </Button>
+                </Link>
+              </div>
+              <div className="text-xs text-center">
+                Passez sur notre Radio D pour demander votre distributeur dès maintenant
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="border-0 mt-4 bg-gradian-to-br from-background backdrop-blur-s to-muted/50 h-full">
+            <CardContent className="justify-items-center">
+              <div className="justify-items-center content-center">
+                <CardTitle>Rejoignez le Sprunk Crew</CardTitle>
+              </div>
+              <div className="py-4">
+                <Link href="/crew-pass">
+                  <Button>
+                    <IdCardLanyard />
+                    Vers le Sprunk Pass
+                  </Button>
+                </Link>
+              </div>
+              <div className="text-xs text-center">
+                Passez la vitesse supérieur sur nos events avec des récompenses Sprunk surchargé d&apos;adrénaline
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       </motion.div>
     </div>

@@ -19,8 +19,8 @@ export default function Home() {
           />
         </div>
         {/* Content Layer */}
-        <div className="relative z-10 flex flex-col min-h-screen">
-          <header className="flex justify-between items-center bg-background/20 backdrop-blur-xs p-4">
+        <div className="relative z-10 flex flex-col h-screen">
+          <header className="flex justify-between items-center bg-background/20 backdrop-blur-xs p-4 shrink-0">
             <Image
               src="/logos/Sprunk_Fuel_Logo.png"
               alt="logo-sprunk"
@@ -31,10 +31,20 @@ export default function Home() {
               <LoginButton />
             </div>
           </header>
-          <main className="flex-1 p-4 container mx-auto">
+          <main 
+            className="
+              flex-1 p-4 container mx-auto overflow-auto 
+              [&::-webkit-scrollbar]:w-1
+              [&::-webkit-scrollbar-track]:rounded
+              [&::-webkit-scrollbar-track]:bg-gray-100
+              [&::-webkit-scrollbar-thumb]:rounded
+              [&::-webkit-scrollbar-thumb]:bg-primary
+              dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+              dark:[&::-webkit-scrollbar-thumb]:bg-primary"
+          >
             <PageContent />
           </main>
-          <footer className="bg-background/10 backdrop-blur-xs p-2 text-center">
+          <footer className="bg-background/10 backdrop-blur-xs p-2 text-center shrink-0">
             <p>&copy; 2025 Sprunk-Baylife. Tous droits réservés.</p>
           </footer>
         </div>

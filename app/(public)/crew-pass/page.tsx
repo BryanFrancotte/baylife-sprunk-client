@@ -1,5 +1,7 @@
 import { GridScan } from "@/components/crew-pass/grid-scan";
 import Lanyard from "@/components/crew-pass/lanyard";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function CrewPassPage() {
   return (
@@ -22,6 +24,16 @@ export default function CrewPassPage() {
       </div>
       <div className="fixed inset-0">
         <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} />
+      </div>
+      <div className="fixed items-center p-4 z-10">
+        <Link href="/">
+          <Image
+            src="/logos/Sprunk_Fuel_Logo.png"
+            alt="logo-sprunk"
+            width={150}
+            height={150}
+          />
+        </Link>
       </div>
     </div>
   );

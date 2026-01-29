@@ -17,7 +17,7 @@
   --primary: oklch(0.76 0.17 134);        /* Sprunk Green */
   --primary-foreground: oklch(1 0 0);
 
-  --secondary: oklch(0.90 0.22 122);      /* Lime Highlight */
+  --secondary: oklch(0.55 0.21 148);      /* Darker Green Highlight */
   --secondary-foreground: oklch(0.15 0 0);
 
   --accent: oklch(0.89 0.15 105);         /* Fizzy Yellow */
@@ -26,7 +26,7 @@
   --muted: oklch(0.83 0.01 247);          /* Can Silver */
   --muted-foreground: oklch(0.40 0 0);
 
-  --destructive: oklch(0.55 0.21 148);    /* Darker Green Warning */
+  --destructive: oklch(0.6733 0.2143 26.6360);    /* Red Warning */
   --destructive-foreground: oklch(1 0 0);
 
   --border: oklch(0.90 0 0);
@@ -87,7 +87,7 @@
   --primary: oklch(0.76 0.17 134);
   --primary-foreground: oklch(0.15 0 0);
 
-  --secondary: oklch(0.90 0.22 122);
+  --secondary: oklch(0.55 0.21 148);
   --secondary-foreground: oklch(0.15 0 0);
 
   --accent: oklch(0.89 0.15 105);
@@ -96,7 +96,7 @@
   --muted: oklch(0.40 0.01 247);
   --muted-foreground: oklch(0.78 0 0);
 
-  --destructive: oklch(0.55 0.21 148);
+  --destructive: oklch(0.6733 0.2143 26.6360);
   --destructive-foreground: oklch(1 0 0);
 
   --border: oklch(0.25 0 0);
